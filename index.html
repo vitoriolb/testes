@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arquivo BABY700 | Incidente Alienígena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #040a05;
+      --neon: #27ff6a;
+      --neon-soft: rgba(39, 255, 106, 0.25);
+      --shadow: rgba(0, 0, 0, 0.8);
+      --accent: #7afff2;
+      --danger: #ff3b3b;
+      --polaroid: #ece6d8;
+      --polaroid-shadow: rgba(0, 0, 0, 0.55);
+      --pin: #b71f1f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top, rgba(4, 20, 10, 0.9) 0%, var(--bg) 60%),
+        #000;
+      color: var(--neon);
+      font-family: "Share Tech Mono", monospace;
+      overflow-x: hidden;
+    }
+
+    .scanlines::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0) 4px,
+        rgba(0, 0, 0, 0) 6px
+      );
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.45;
+      z-index: 2;
+    }
+
+    .scanlines::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.7) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    header {
+      padding: 4rem 10vw 2rem;
+      text-align: left;
+      position: relative;
+      z-index: 3;
+    }
+
+    .title {
+      font-family: "Orbitron", sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-shadow: 0 0 20px var(--neon-soft);
+    }
+
+    .subtitle {
+      margin-top: 1rem;
+      font-size: 1.05rem;
+      max-width: 680px;
+      color: rgba(122, 255, 242, 0.75);
+      line-height: 1.6;
+    }
+
+    main {
+      padding: 0 10vw 4rem;
+      display: grid;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 3;
+    }
+
+    .panel {
+      border: 1px solid rgba(39, 255, 106, 0.25);
+      padding: 2rem;
+      background: rgba(5, 20, 9, 0.55);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+    }
+
+    .panel h2 {
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .panel p {
+      line-height: 1.6;
+      color: rgba(39, 255, 106, 0.8);
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .artifact {
+      border: 1px dashed rgba(122, 255, 242, 0.5);
+      padding: 1.2rem;
+      position: relative;
+    }
+
+    .artifact::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(39, 255, 106, 0.3);
+      filter: blur(0.4px);
+      pointer-events: none;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--danger);
+      color: var(--danger);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.7rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .signal {
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+
+    .pulse {
+      display: inline-block;
+      margin-left: 0.4rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 10px var(--danger);
+      animation: blink 1.2s infinite;
+    }
+
+    .board {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(39, 255, 106, 0.2), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .board-grid {
+      position: relative;
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      z-index: 1;
+    }
+
+    .board-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .polaroid {
+      position: relative;
+      background: var(--polaroid);
+      color: #141414;
+      padding: 0.8rem 0.8rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 12px 30px var(--polaroid-shadow);
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    }
+
+    .polaroid:nth-child(2n) {
+      transform: rotate(1.8deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+      filter: drop-shadow(0 0 12px rgba(39, 255, 106, 0.45));
+    }
+
+    .polaroid::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      background: var(--pin);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset -2px -3px 4px rgba(0, 0, 0, 0.35);
+    }
+
+    .polaroid img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      border: 2px solid rgba(10, 10, 10, 0.2);
+      background: #0b1b0f;
+    }
+
+    .polaroid figcaption {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #222;
+    }
+
+    @keyframes blink {
+      0%,
+      70% {
+        opacity: 1;
+      }
+      71%,
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    footer {
+      padding: 2rem 10vw 3rem;
+      font-size: 0.85rem;
+      color: rgba(39, 255, 106, 0.6);
+      border-top: 1px solid rgba(39, 255, 106, 0.2);
+      position: relative;
+      z-index: 3;
+    }
+
+    .glow {
+      text-shadow: 0 0 12px var(--neon);
+    }
+
+    .matrix-stream {
+      position: fixed;
+      top: -20vh;
+      left: 0;
+      width: 100%;
+      height: 140vh;
+      background-image: linear-gradient(
+        transparent 0%,
+        rgba(39, 255, 106, 0.08) 30%,
+        rgba(39, 255, 106, 0.2) 50%,
+        rgba(39, 255, 106, 0.08) 70%,
+        transparent 100%
+      );
+      animation: fall 12s linear infinite;
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-30%);
+      }
+      100% {
+        transform: translateY(30%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="matrix-stream" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <header>
+    <div class="tag">Classificado</div>
+    <h1 class="title glow">Arquivo BABY700</h1>
+    <p class="subtitle">
+      Um protocolo investigativo sinistro, forjado para decodificar o contato alienígena que se infiltra
+      entre ruídos de rádio, relatos desaparecidos e uma presença que observa no escuro.
+    </p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Relatório do Incidente</h2>
+      <p>
+        A trilha de evidências aponta para entidades que se movem como sombras digitais, deixando marcas
+        em paredes, sensores e sonhos. Os agentes ouviram um nome repetido em frequências distorcidas:
+        <span class="glow">BABY700</span>. Ele não é um código. É um aviso.
+      </p>
+    </section>
+
+    <section class="grid">
+      <article class="panel artifact">
+        <div class="tag">Ameaça</div>
+        <h2>Sinal Alienígena</h2>
+        <p>
+          Ruído orgânico captado em 07:13. Linguagem fractal, impossível de traduzir. O arquivo sugere
+          que os alienígenas usam o nome BABY700 como chave para abrir portais e apagar testemunhas.
+        </p>
+      </article>
+
+      <article class="panel artifact">
+        <div class="tag">Investigação</div>
+        <h2>Zona de Quarentena</h2>
+        <p>
+          Laboratório subterrâneo isolado. Luzes piscam sem padrão, como se respondessem a algo além da
+          nossa realidade. A equipe descreve uma estética de jogo de terror: corredores infinitos,
+          sussurros e portas que nunca se abrem.
+        </p>
+      </article>
+
+      <article class="panel artifact">
+        <div class="tag">Anomalia</div>
+        <h2>Documento Perdido</h2>
+        <p>
+          Há 14 páginas vazias. Ao fundo, uma frase criptografada emerge: "Eles voltam quando o nome
+          BABY700 é pronunciado". A resposta do sistema: <span class="signal">sinal detectado</span>
+          <span class="pulse" aria-hidden="true"></span>
+        </p>
+      </article>
+    </section>
+
+    <section class="panel board">
+      <h2>Painel Investigativo</h2>
+      <p>
+        Evidências visuais do contato alienígena. Cada polaroid foi cravada com pins e conectada ao
+        fenômeno BABY700. Passe o mouse para ativar a distorção na imagem.
+      </p>
+      <svg class="board-lines" viewBox="0 0 900 320" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M120 80 L420 140 L680 90" stroke="rgba(122,255,242,0.4)" stroke-width="2" fill="none" />
+        <path d="M200 260 L440 160 L770 220" stroke="rgba(39,255,106,0.35)" stroke-width="2" fill="none" />
+      </svg>
+      <div class="board-grid">
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><radialGradient id='g' cx='50%' cy='35%'><stop offset='0%' stop-color='%23a8ffb9'/><stop offset='50%' stop-color='%230e351a'/><stop offset='100%' stop-color='%23040a05'/></radialGradient></defs><rect width='240' height='180' fill='url(%23g)'/><circle cx='120' cy='90' r='45' fill='%2327ff6a' opacity='0.6'/><ellipse cx='100' cy='85' rx='12' ry='20' fill='%23040a05'/><ellipse cx='140' cy='85' rx='12' ry='20' fill='%23040a05'/><path d='M80 120 Q120 140 160 120' stroke='%23040a05' stroke-width='6' fill='none'/></svg>"
+            alt="Entidade capturada em infravermelho"
+          />
+          <figcaption>Entidade 01</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><linearGradient id='g2' x1='0' x2='1'><stop offset='0%' stop-color='%23040a05'/><stop offset='100%' stop-color='%231b5f30'/></linearGradient></defs><rect width='240' height='180' fill='url(%23g2)'/><path d='M40 140 L110 60 L200 130' stroke='%237afff2' stroke-width='4' fill='none'/><circle cx='110' cy='60' r='18' fill='%2327ff6a'/><circle cx='200' cy='130' r='14' fill='%23a8ffb9'/><circle cx='40' cy='140' r='10' fill='%237afff2'/></svg>"
+            alt="Rota de nave alienígena"
+          />
+          <figcaption>Rota S-77</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><radialGradient id='g3' cx='50%' cy='60%'><stop offset='0%' stop-color='%237afff2'/><stop offset='60%' stop-color='%230b1b0f'/><stop offset='100%' stop-color='%23040a05'/></radialGradient></defs><rect width='240' height='180' fill='url(%23g3)'/><rect x='40' y='30' width='160' height='120' fill='none' stroke='%2327ff6a' stroke-width='3'/><path d='M40 30 L200 150' stroke='%2327ff6a' stroke-width='2'/><path d='M200 30 L40 150' stroke='%2327ff6a' stroke-width='2'/></svg>"
+            alt="Recorte de laboratório"
+          />
+          <figcaption>Lab-Delta</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><linearGradient id='g4' x1='0' x2='0' y1='0' y2='1'><stop offset='0%' stop-color='%230b1b0f'/><stop offset='100%' stop-color='%23040a05'/></linearGradient></defs><rect width='240' height='180' fill='url(%23g4)'/><ellipse cx='120' cy='90' rx='70' ry='35' fill='%2327ff6a' opacity='0.3'/><ellipse cx='120' cy='90' rx='28' ry='14' fill='%237afff2'/><circle cx='120' cy='90' r='6' fill='%23040a05'/></svg>"
+            alt="Sombra alienígena"
+          />
+          <figcaption>Sombra 4B</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Procedimento</h2>
+      <p>
+        Se você encontrar olhos brilhando no breu, não investigue sozinho. O protocolo exige silêncio,
+        luz estroboscópica e registro contínuo. O inimigo não é apenas físico, é uma entidade que invade
+        memórias. BABY700 é a última barreira entre nós e o apagamento total.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Registro confidencial | Arquivo BABY700 | Observação alienígena contínua.
+  </footer>
+</body>
+</html>
