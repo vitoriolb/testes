@@ -19,6 +19,9 @@
       --shadow: rgba(0, 0, 0, 0.8);
       --accent: #7afff2;
       --danger: #ff3b3b;
+      --polaroid: #ece6d8;
+      --polaroid-shadow: rgba(0, 0, 0, 0.55);
+      --pin: #b71f1f;
     }
 
     * {
@@ -161,6 +164,87 @@
       animation: blink 1.2s infinite;
     }
 
+    .board {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .board::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(39, 255, 106, 0.2), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .board-grid {
+      position: relative;
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      z-index: 1;
+    }
+
+    .board-lines {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .polaroid {
+      position: relative;
+      background: var(--polaroid);
+      color: #141414;
+      padding: 0.8rem 0.8rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 12px 30px var(--polaroid-shadow);
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    }
+
+    .polaroid:nth-child(2n) {
+      transform: rotate(1.8deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.75);
+      filter: drop-shadow(0 0 12px rgba(39, 255, 106, 0.45));
+    }
+
+    .polaroid::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      background: var(--pin);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset -2px -3px 4px rgba(0, 0, 0, 0.35);
+    }
+
+    .polaroid img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      border: 2px solid rgba(10, 10, 10, 0.2);
+      background: #0b1b0f;
+    }
+
+    .polaroid figcaption {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #222;
+    }
+
     @keyframes blink {
       0%,
       70% {
@@ -265,6 +349,48 @@
           <span class="pulse" aria-hidden="true"></span>
         </p>
       </article>
+    </section>
+
+    <section class="panel board">
+      <h2>Painel Investigativo</h2>
+      <p>
+        Evidências visuais do contato alienígena. Cada polaroid foi cravada com pins e conectada ao
+        fenômeno BABY700. Passe o mouse para ativar a distorção na imagem.
+      </p>
+      <svg class="board-lines" viewBox="0 0 900 320" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M120 80 L420 140 L680 90" stroke="rgba(122,255,242,0.4)" stroke-width="2" fill="none" />
+        <path d="M200 260 L440 160 L770 220" stroke="rgba(39,255,106,0.35)" stroke-width="2" fill="none" />
+      </svg>
+      <div class="board-grid">
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><radialGradient id='g' cx='50%' cy='35%'><stop offset='0%' stop-color='%23a8ffb9'/><stop offset='50%' stop-color='%230e351a'/><stop offset='100%' stop-color='%23040a05'/></radialGradient></defs><rect width='240' height='180' fill='url(%23g)'/><circle cx='120' cy='90' r='45' fill='%2327ff6a' opacity='0.6'/><ellipse cx='100' cy='85' rx='12' ry='20' fill='%23040a05'/><ellipse cx='140' cy='85' rx='12' ry='20' fill='%23040a05'/><path d='M80 120 Q120 140 160 120' stroke='%23040a05' stroke-width='6' fill='none'/></svg>"
+            alt="Entidade capturada em infravermelho"
+          />
+          <figcaption>Entidade 01</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><linearGradient id='g2' x1='0' x2='1'><stop offset='0%' stop-color='%23040a05'/><stop offset='100%' stop-color='%231b5f30'/></linearGradient></defs><rect width='240' height='180' fill='url(%23g2)'/><path d='M40 140 L110 60 L200 130' stroke='%237afff2' stroke-width='4' fill='none'/><circle cx='110' cy='60' r='18' fill='%2327ff6a'/><circle cx='200' cy='130' r='14' fill='%23a8ffb9'/><circle cx='40' cy='140' r='10' fill='%237afff2'/></svg>"
+            alt="Rota de nave alienígena"
+          />
+          <figcaption>Rota S-77</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><radialGradient id='g3' cx='50%' cy='60%'><stop offset='0%' stop-color='%237afff2'/><stop offset='60%' stop-color='%230b1b0f'/><stop offset='100%' stop-color='%23040a05'/></radialGradient></defs><rect width='240' height='180' fill='url(%23g3)'/><rect x='40' y='30' width='160' height='120' fill='none' stroke='%2327ff6a' stroke-width='3'/><path d='M40 30 L200 150' stroke='%2327ff6a' stroke-width='2'/><path d='M200 30 L40 150' stroke='%2327ff6a' stroke-width='2'/></svg>"
+            alt="Recorte de laboratório"
+          />
+          <figcaption>Lab-Delta</figcaption>
+        </figure>
+        <figure class="polaroid">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 180'><defs><linearGradient id='g4' x1='0' x2='0' y1='0' y2='1'><stop offset='0%' stop-color='%230b1b0f'/><stop offset='100%' stop-color='%23040a05'/></linearGradient></defs><rect width='240' height='180' fill='url(%23g4)'/><ellipse cx='120' cy='90' rx='70' ry='35' fill='%2327ff6a' opacity='0.3'/><ellipse cx='120' cy='90' rx='28' ry='14' fill='%237afff2'/><circle cx='120' cy='90' r='6' fill='%23040a05'/></svg>"
+            alt="Sombra alienígena"
+          />
+          <figcaption>Sombra 4B</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section class="panel">
